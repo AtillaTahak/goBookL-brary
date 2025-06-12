@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "API for managing a book library and URL cleaner service",
-        "title": "ByFood Book API",
+        "title": "Book Library API",
         "contact": {},
         "version": "1.0"
     },

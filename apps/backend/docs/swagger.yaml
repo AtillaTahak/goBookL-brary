@@ -19,7 +19,7 @@ host: localhost:8080
 info:
   contact: {}
   description: API for managing a book library and URL cleaner service
-  title: ByFood Book API
+  title: Book Library API
   version: "1.0"
 paths:
   /books:
