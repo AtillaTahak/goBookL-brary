@@ -1,10 +1,11 @@
 package main
 
 import (
-	"github.com/gofiber/fiber/v2"
-	"github.com/swaggo/fiber-swagger"
-	_ "github.com/AtillaTahaK/gobooklibrary/docs" // Yerel modül adını kullanın
-
+	    "log"
+    "github.com/gofiber/fiber/v2"
+    "github.com/swaggo/fiber-swagger"
+    _ "github.com/AtillaTahaK/gobooklibrary/docs"
+    "github.com/AtillaTahaK/gobooklibrary/book"
 )
 
 // @title           ByFood Book API
@@ -13,14 +14,19 @@ import (
 // @host            localhost:8080
 // @BasePath        /
 func main() {
-	app := fiber.New()
+    app := fiber.New()
 
-	// Swagger endpoint
-	app.Get("/swagger/*", fiberSwagger.WrapHandler)
+    app.Get("/swagger/*", fiberSwagger.WrapHandler)
 
-	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Backend working")
-	})
+    app.Get("/books", book.GetBook)
+    app.Get("/books/:id", book.GetBook)
+    app.Post("/books", book.AddBookHandler)
+    app.Put("/books/:id", book.UpdateBookHandler)
+    app.Delete("/books/:id", book.DeleteBookHandler)
 
-	app.Listen(":8080")
+    app.Get("/", func(c *fiber.Ctx) error {
+        return c.SendString("Backend is running!")
+    })
+    log.Println("Server starting on :8080")
+    log.Fatal(app.Listen(":8080"))
 }

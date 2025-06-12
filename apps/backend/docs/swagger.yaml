@@ -1,9 +1,123 @@
 basePath: /
+definitions:
+  book.Book:
+    properties:
+      author:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+      year:
+        type: integer
+    required:
+    - author
+    - title
+    - year
+    type: object
 host: localhost:8080
 info:
   contact: {}
   description: API for managing a book library and URL cleaner service
   title: ByFood Book API
   version: "1.0"
-paths: {}
+paths:
+  /books:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/book.Book'
+            type: array
+      summary: Get all books
+      tags:
+      - books
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Book to add
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/book.Book'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/book.Book'
+        "400":
+          description: Bad Request
+      summary: Create a new book
+      tags:
+      - books
+  /books/{id}:
+    delete:
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+      summary: Delete a book by ID
+      tags:
+      - books
+    get:
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/book.Book'
+        "404":
+          description: Not Found
+      summary: Get a single book by ID
+      tags:
+      - books
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Updated book
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/book.Book'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/book.Book'
+        "404":
+          description: Not Found
+      summary: Update a book by ID
+      tags:
+      - books
 swagger: "2.0"
