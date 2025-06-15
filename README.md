@@ -642,10 +642,10 @@ This project demonstrates proficiency in:
 
 For questions or support regarding this project:
 
-- **Author**: [Atilla Taha Kördüğüm]
-- **Email**: [atillatahaa@gmail.com]
-- **LinkedIn**: [https://www.linkedin.com/in/atillatahakordugum/]
-- **GitHub**: [https://github.com/AtillaTahak/]
+- **Author**: Atilla Taha Kördüğüm
+- **Email**: atillatahaa@gmail.com
+- **LinkedIn**: https://www.linkedin.com/in/atillatahakordugum/
+- **GitHub**: https://github.com/AtillaTahak/
 
 ## 📄 License
 
