@@ -61,7 +61,7 @@ This project was developed as a comprehensive demonstration of modern backend de
 ## 🏗️ System Architecture
 
 ### High-Level Architecture
-```
+``` bash
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │   Next.js UI    │    │   Go Backend    │    │   PostgreSQL    │
 │   (Frontend)    │◄──►│   (REST API)    │◄──►│   (Database)    │
@@ -84,7 +84,7 @@ This project was developed as a comprehensive demonstration of modern backend de
 ```
 
 ### Backend Architecture (Go)
-```
+``` bash
 ┌─────────────────────────────────────────────────────────┐
 │                      HTTP Layer                         │
 ├─────────────────────────────────────────────────────────┤
@@ -102,7 +102,7 @@ This project was developed as a comprehensive demonstration of modern backend de
 
 ## 📁 Detailed Project Structure
 
-```
+``` bash
 goBookLibrary/
 ├── 📁 apps/
 │   ├── 📁 backend/                 # Go Backend Service
@@ -300,7 +300,7 @@ METRICS_PATH=/metrics
 ## 🔐 Authentication & Authorization
 
 ### JWT Authentication Flow
-```
+``` code
 ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
 │   Client    │    │  Backend    │    │  Database   │
 └─────────────┘    └─────────────┘    └─────────────┘
@@ -637,23 +637,6 @@ This project demonstrates proficiency in:
 - **Documentation**: API documentation and code comments
 - **Error Handling**: Robust error handling and recovery
 - **Security**: Security best practices implementation
-
-## 🚀 Future Enhancements
-
-### Planned Features
-- **Message Queues**: RabbitMQ/Kafka for async processing
-- **Full-Text Search**: Elasticsearch integration
-- **File Storage**: AWS S3 integration for book covers
-- **Real-time Features**: WebSocket for real-time updates
-- **API Gateway**: Rate limiting and API versioning
-- **Microservices**: Service decomposition for scalability
-
-### Infrastructure Improvements
-- **Kubernetes**: Container orchestration
-- **CI/CD Pipeline**: Automated testing and deployment
-- **Blue-Green Deployment**: Zero-downtime deployments
-- **Auto-scaling**: Horizontal pod autoscaling
-- **Backup Strategy**: Automated database backups
 
 ## 📞 Contact & Support
 
