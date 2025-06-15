@@ -1,6 +1,6 @@
 # Go Book Library - Enterprise-Ready Microservice
 
-A production-grade book library management system demonstrating modern Go development practices, microservice architecture, and comprehensive DevOps implementation. This project showcases enterprise-level software engineering skills including scalability, observability, security, and maintainability.
+A production-grade book library management system demonstrating modern Go development practices, clean architecture, and comprehensive DevOps implementation. This project showcases enterprise-level software engineering skills including scalability, observability, security, and maintainability.
 
 ## 🎯 Project Overview
 
