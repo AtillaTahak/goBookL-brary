@@ -119,3 +119,12 @@ Thumbs.db
 
 # Tailwind CSS
 .tailwindcss-cache/
+
+
+# Build outputs
+apps/frontend/.next/
+apps/frontend/out/
+apps/backend/dist/
+
+# Dependencies
+node_modules/
