@@ -176,7 +176,6 @@ func main() {
         })
     })
 
-    // Basic info endpoint
     app.Get("/", func(c *fiber.Ctx) error {
         return c.JSON(fiber.Map{
             "message": "Book Library API",
