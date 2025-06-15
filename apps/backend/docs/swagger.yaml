@@ -1,12 +1,43 @@
 basePath: /
 definitions:
+  auth.LoginRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  auth.RegisterRequest:
+    properties:
+      email:
+        type: string
+      password:
+        minLength: 6
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
   book.Book:
     properties:
       author:
         type: string
+      created_at:
+        type: string
+      genre:
+        type: string
       id:
         type: integer
+      isbn:
+        type: string
       title:
+        type: string
+      updated_at:
         type: string
       year:
         type: integer
@@ -15,15 +46,94 @@ definitions:
     - title
     - year
     type: object
+  url.URLRequest:
+    properties:
+      operation:
+        enum:
+        - canonical
+        - redirection
+        - all
+        type: string
+      url:
+        type: string
+    required:
+    - operation
+    - url
+    type: object
+  url.URLResponse:
+    properties:
+      processed_url:
+        type: string
+    type: object
 host: localhost:8080
 info:
   contact: {}
-  description: API for managing a book library and URL cleaner service
+  description: API for managing a book library and URL cleaner service with PostgreSQL
+    and GORM
   title: Book Library API
   version: "1.0"
 paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: User login info
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/auth.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Login user
+      tags:
+      - auth
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: User registration info
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/auth.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Register new user
+      tags:
+      - auth
   /books:
     get:
+      parameters:
+      - description: Search books by title or author
+        in: query
+        name: search
+        type: string
       produces:
       - application/json
       responses:
@@ -33,6 +143,11 @@ paths:
             items:
               $ref: '#/definitions/book.Book'
             type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
       summary: Get all books
       tags:
       - books
@@ -55,6 +170,14 @@ paths:
             $ref: '#/definitions/book.Book'
         "400":
           description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
       summary: Create a new book
       tags:
       - books
@@ -69,8 +192,16 @@ paths:
       responses:
         "204":
           description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
         "404":
           description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
       summary: Delete a book by ID
       tags:
       - books
@@ -88,8 +219,16 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/book.Book'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
         "404":
           description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
       summary: Get a single book by ID
       tags:
       - books
@@ -115,9 +254,45 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/book.Book'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
         "404":
           description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
       summary: Update a book by ID
       tags:
       - books
+  /url/clean:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: URL cleanup input
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/url.URLRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/url.URLResponse'
+        "400":
+          description: Bad Request
+      summary: Clean and redirect URL
+      tags:
+      - url
 swagger: "2.0"

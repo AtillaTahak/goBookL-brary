@@ -1,50 +1,57 @@
 package book
 
+import (
+	"github.com/AtillaTahaK/gobooklibrary/pkg/db"
+)
 
-var books = []Book{
-	{ID: 1, Title: "1984", Author: "George Orwell", Year: 1949},
-	{ID: 2, Title: "Brave New World", Author: "Aldous Huxley", Year: 1932},
+func GetAllBooks() ([]Book, error) {
+	var books []Book
+	if err := db.DB.Find(&books).Error; err != nil {
+		return nil, err
+	}
+	return books, nil
 }
 
-var nextID = 3
-
-func GetAllBooks() ([]Book) {
-	return books
+func GetBookByID(id uint) (*Book, error) {
+	var book Book
+	if err := db.DB.First(&book, id).Error; err != nil {
+		return nil, err
+	}
+	return &book, nil
 }
 
-func GetBookByID(id int) *Book {
-	for _, b := range books {
-		if b.ID == id {
-			return &b
-		}
+func CreateBook(book *Book) error {
+	if err := db.DB.Create(book).Error; err != nil {
+		return err
 	}
 	return nil
 }
 
-func AddBook(b Book) Book {
-	b.ID = nextID
-	nextID++
-	books = append(books, b)
-	return b
+func UpdateBook(id uint, updatedBook *Book) (*Book, error) {
+	var book Book
+	if err := db.DB.First(&book, id).Error; err != nil {
+		return nil, err
+	}
+
+	// Update only non-zero fields
+	if err := db.DB.Model(&book).Updates(updatedBook).Error; err != nil {
+		return nil, err
+	}
+
+	return &book, nil
 }
 
-func UpdateBook(id int, data Book) *Book {
-	for i, b := range books {
-		if b.ID == id {
-			data.ID = id
-			books[i] = data
-			return &books[i]
-		}
+func DeleteBook(id uint) error {
+	if err := db.DB.Delete(&Book{}, id).Error; err != nil {
+		return err
 	}
 	return nil
 }
 
-func DeleteBook(id int) bool {
-	for i, b := range books {
-		if b.ID == id {
-			books = append(books[:i], books[i+1:]...)
-			return true
-		}
+func SearchBooks(query string) ([]Book, error) {
+	var books []Book
+	if err := db.DB.Where("title ILIKE ? OR author ILIKE ?", "%"+query+"%", "%"+query+"%").Find(&books).Error; err != nil {
+		return nil, err
 	}
-	return false
+	return books, nil
 }
